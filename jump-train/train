@@ -1,0 +1,28 @@
+#!/bin/bash
+
+ls pos | grep "bmp" | awk '{print $0 " 1 0 0 24 24"}' > pos/pos.txt
+NUMPOS=`cat pos/pos.txt|wc -l`
+
+ls neg/*.bmp > neg/neg.txt
+NUMNEG=`cat neg/neg.txt|wc -l`
+
+$OPENCV_PATH/bin/opencv_createsamples \
+	-info pos/pos.txt \
+	-vec pos.vec \
+	-bg neg/neg.txt \
+	-num $NUMPOS \
+	-w 24 -h 24 \
+	|| exit
+
+echo "======================"
+
+$OPENCV_PATH/bin/opencv_traincascade \
+	-data xml \
+	-vec pos.vec \
+	-bg neg/neg.txt \
+	-featureType LBP \
+	-numPos $NUMPOS \
+	-numNeg $NUMNEG \
+	-numStages 15 \
+	-w 24 -h 24 \
+	|| exit
