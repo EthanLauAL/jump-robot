@@ -1,12 +1,12 @@
 #!/bin/bash
 
-ls pos | grep "bmp" | awk '{print $0 " 1 0 0 24 24"}' > pos/pos.txt
+ls pos | grep .bmp | awk '{print $0 " 1 0 0 24 24"}' > pos/pos.txt
 NUMPOS=`cat pos/pos.txt|wc -l`
 
-ls neg/*.bmp > neg/neg.txt
+ls neg | grep .bmp > neg/neg.txt
 NUMNEG=`cat neg/neg.txt|wc -l`
 
-$OPENCV_PATH/bin/opencv_createsamples \
+opencv_createsamples \
 	-info pos/pos.txt \
 	-vec pos.vec \
 	-bg neg/neg.txt \
@@ -16,7 +16,7 @@ $OPENCV_PATH/bin/opencv_createsamples \
 
 echo "======================"
 
-$OPENCV_PATH/bin/opencv_traincascade \
+opencv_traincascade \
 	-data xml \
 	-vec pos.vec \
 	-bg neg/neg.txt \
@@ -26,3 +26,7 @@ $OPENCV_PATH/bin/opencv_traincascade \
 	-numStages 15 \
 	-w 24 -h 24 \
 	|| exit
+
+echo "======================"
+
+cp xml/cascade.xml /output/
