@@ -23,7 +23,7 @@ opencv_traincascade \
 	-featureType LBP \
 	-numPos $NUMPOS \
 	-numNeg $NUMNEG \
-	-numStages 15 \
+	-numStages 20 \
 	-w 24 -h 24 \
 	|| exit
 

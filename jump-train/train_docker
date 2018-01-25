@@ -1,0 +1,4 @@
+#!/bin/bash
+
+docker build -t jump-train .
+docker run --mount type=bind,src=`pwd`,dst=/output jump-train

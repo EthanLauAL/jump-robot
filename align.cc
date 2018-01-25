@@ -149,13 +149,15 @@ std::vector<cv::Point2f> findBorder(grabCutEvaler& evaler,
 	for (int i=0 ; i<4 ; i++)
 	{
 		std::vector<cv::Point2f> vertexPoints;
+
 		int size = vertexes[i].size();
 		for (int j = size * 1 / 4 ; j < size * 3 / 4 ; j++) {
 			auto& p = vertexes[i][j];
 			vertexPoints.push_back(cv::Point2f(p.x, p.y));
 		}
+
 		cv::fitLine(vertexPoints, lines[i],
-			CV_DIST_HUBER, 10, 0, 0.01);
+			CV_DIST_L2, 0, 0, 0.01);
 	}
 
 	//每两个边的交点
