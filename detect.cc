@@ -106,3 +106,26 @@ std::pair<cv::Point2f,bool> findTop(const cv::Mat& mask, int points) {
 	sum.y /= count;
 	return std::make_pair(sum, true);
 }
+
+cv::Mat sumDerivative(const cv::Mat& image) {
+	assert(image.type() == CV_8UC3);
+
+	cv::Mat tmp(image.size(), CV_8UC3);
+	cv::cvtColor(image, tmp, CV_BGR2YCrCb);
+
+	std::vector<cv::Mat> channels;
+	cv::split(tmp, channels);
+
+	cv::Mat sum(tmp.size(), CV_16SC1, cv::Scalar(0));
+	cv::Mat out(tmp.size(), CV_16SC1);
+
+	for (auto& c : channels) {
+		cv::Scharr(c, out, CV_16S, 1, 0);
+		cv::add(sum, cv::abs(out), sum);
+
+		cv::Scharr(c, out, CV_16S, 0, 1);
+		cv::add(sum, cv::abs(out), sum);
+	}
+
+	return sum;
+}

@@ -220,7 +220,7 @@ AsyncFindBorder::AsyncFindBorder(cv::Rect rect) :
 	startingArea(rect), running(false), thd(nullptr), evaler(nullptr)
 { }
 
-void AsyncFindBorder::Push(const cv::Mat frame)
+void AsyncFindBorder::Push(const cv::Mat& frame)
 {
 	std::lock_guard<std::mutex> lock(mtx);
 	if (running) { return; }

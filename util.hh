@@ -21,12 +21,15 @@ inline cv::Point trPoint(const cv::Rect& rect) {
 	return cv::Point(rect.x + rect.width, rect.y);
 }
 
+cv::Mat resizeImageRatio(const cv::Mat& m, float ratio);
+
 struct Stat {
 	Stat();
 
 	int count;
 	double sum;
 	double mean;
+	double median;
 	double variance;
 	double standardDeviation;
 };
@@ -40,6 +43,7 @@ public:
 	void Push(const double val);
 	Stat Get(double errlimit) const;
 	void Reset();
+	//cv::Mat Debug() const;
 private:
 	int size;
 	std::vector<double> values;

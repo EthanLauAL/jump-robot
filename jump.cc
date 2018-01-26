@@ -88,7 +88,7 @@ bool robot::Jump(float t) {
 	if (n != data.size()) return false;
 
 	aval = std::chrono::system_clock::now() +
-		std::chrono::milliseconds(dur + 1500);
+		std::chrono::milliseconds(dur + 800);
 	return true;
 }
 

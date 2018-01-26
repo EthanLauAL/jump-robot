@@ -23,7 +23,7 @@ private:
 class AsyncFindBorder {
 public:
 	explicit AsyncFindBorder(cv::Rect rect);
-	void Push(const cv::Mat frame);
+	void Push(const cv::Mat& frame);
 	std::vector<cv::Point2f> GetPoly() const;
 	cv::Mat GetDebugImage() const;
 	void Wait() const;
